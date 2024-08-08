@@ -1,0 +1,67 @@
+/* index.css */
+body {
+  overflow: hidden;
+}
+.vacation-dashboard-container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .main-form-container {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .form-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .page-name {
+    margin-bottom: 20px;
+  }
+  
+  .download-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+    background: linear-gradient(45deg, #ff6f61, #d83a56);
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+  }
+  
+  .download-button:hover {
+    background: linear-gradient(45deg, #d83a56, #ff6f61);
+    transform: scale(1.05);
+  }
+  
+  .download-button:active {
+    transform: scale(0.95);
+  }
+  .footer {
+    margin-top: auto; 
+  }
+  .signatureleft{
+    margin: 200px 0 0 0;
+  }
+  .signatureright{
+    margin: -45px 20px 0 0;
+  }
+  .imagestamp {
+    width: 150px;
+    margin: 0px 0 0 600px;
+  }
+  .imagesignature {
+    width: 150px;
+    margin: -80px 0 50px 600px;
+  }

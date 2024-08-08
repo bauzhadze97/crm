@@ -1,0 +1,121 @@
+.auth-page-container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+  }
+  
+  .left-panel, .right-panel {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .left-panel {
+    background-color: #007AD3;
+    color: white;
+  }
+
+  .left-panel h1 {
+    font-size: 2.5rem;
+  }
+  
+  .left-panel p {
+    font-size: 1.5rem;
+  }
+  
+  .right-panel {
+    background-color: #ffffff;
+    padding: 2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .logo h2 {
+    text-align: center;
+    font-size: 20px;
+    color: #105D8D;
+    }
+  
+
+  
+  .sign-in-form {
+    width: 100%;
+    max-width: 600px;
+  }
+  
+  .sign-in-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+  
+  .sign-input {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .sign-in-form .options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .sign-in-form .options label {
+    display: flex;
+    align-items: center;
+    justify-self: center;
+}
+  
+  .sign-in-form .options a {
+    color: #009FE3;
+    text-decoration: none;
+  }
+  
+  .sign-in-form button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #007AD3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .sign-in-form button:hover {
+    background-color: #007BB5;
+  }
+  
+  .sign-up-link {
+    margin-top: 1.5rem;
+    text-align: center;
+  }
+
+
+  
+  @media only screen and (max-width: 600px) {
+    .left-panel {
+      display: none !important;
+    }
+
+    .right-panel {
+      flex: 1 !important;
+      overflow-y: scroll !important;
+    }
+
+    .right-panel .signup-form {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .right-panel form .form-first {
+      padding-top: 10rem;
+    }
+  }
+  

@@ -1,0 +1,122 @@
+.profile-dashboard-container {
+    display: flex;
+    height: 100vh;
+    background-color: #007AD3;
+  }
+
+  .profile {
+    background-color: #fff;
+    /* max-width: 680px; */
+    margin-top: 3rem;
+    padding: 2rem;
+    border-radius: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .profile-main-content {
+    flex: 1;
+    background-color: #007AD3;
+    padding: 2rem;
+    overflow-y: auto;
+  }
+  
+  .search-bar {
+    width: 300px;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .section-header h2 {
+    margin: 0;
+  }
+  
+  .section-header a {
+    color: #009FE3;
+    text-decoration: none;
+  }
+  
+  .cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .events, .chat {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+  
+  .events ul, .chat ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .events ul li, .chat ul li {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .events ul li::before, .chat ul li::before {
+    content: '•';
+    margin-right: 0.5rem;
+  }
+  
+  .events ul li::before {
+    color: #ff9800;
+  }
+  
+  .chat ul li::before {
+    color: #4caf50;
+  }
+  
+  .chat .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .chat .section-header h2 {
+    margin: 0;
+  }
+  
+  .chat .section-header a {
+    color: #009FE3;
+    text-decoration: none;
+  }
+  
+
+
+
+  .profile-form-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .profile-form-wrapper label {
+    color: #105D8D;
+    font-weight: 700;
+    margin-bottom: .5rem;
+  }
+
+  .profile-form-wrapper input {
+    border-radius: .5rem;
+    border: 1px solid #105D8D;
+    padding: .8rem 1rem;
+    margin-bottom: 1rem;
+  }

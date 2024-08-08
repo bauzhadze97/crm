@@ -1,0 +1,115 @@
+.request-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+    font-family: 'Arial, sans-serif';
+  }
+  
+  .request-info {
+    display: flex;
+    gap: 3rem;
+  }
+  
+  .request-type {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    color: #009FE3;
+    width: 140px;
+  }
+  
+  .dot {
+    width: 10px;
+    height: 10px;
+    background-color: #009FE3;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 0.5rem;
+  }
+  
+  .request-duration,
+  .request-start-day,
+  .request-end-day {
+    font-size: 1rem;
+    color: #009FE3;
+  }
+  
+  .request-status {
+    padding: 0.5rem 1rem;
+    width: 100px;
+    text-align: center;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  
+  .request-status.approved {
+    background-color: #00D097;
+    color: white;
+  }
+  
+  .request-status.pending {
+    background-color: #15C0E6;
+    color: white;
+  }
+  
+  .request-status.rejected {
+    background-color: #D7443A;
+    color: white;
+  }
+  
+  .vacation-request-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .vacation-horizontal-line {
+    width: 1px;
+    height: 45px;
+    background-color: #009FE3;
+  }
+
+  .vacation-label {
+    color: #818181;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .middle-wrapper {
+      width: 100% !important;
+    }
+
+    .navigation {
+      display: none !important;
+    }
+
+    .vacation-main-header {
+      flex-direction: column;
+    }
+
+    .vacation-request-button {
+      margin-bottom: 1rem;
+    }
+  
+    .request-card {
+      flex-direction: column;
+    }
+
+    .request-info {
+      flex-direction: column;
+      gap: .5rem !important;
+      margin-bottom: 1rem;
+    }
+
+    .vacation-request-wrapper {
+      flex-direction: row !important;
+    }
+
+    .vacation-label {
+      margin-right: .5rem;
+    }
+  }

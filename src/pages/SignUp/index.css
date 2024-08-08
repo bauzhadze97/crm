@@ -1,0 +1,152 @@
+.sign-up-container {
+    display: flex;
+    height: 100vh;
+    background-color: #f5f5f5;
+  }
+  
+  .left-panel {
+    flex: 0.25;
+    background-color: #007AD3;
+    color: white;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+  }
+  
+  .left-panel h2 {
+    margin-bottom: 2rem;
+  }
+  
+  .left-panel ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .left-panel ul li {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    display: flex; 
+    align-items: center;
+  }
+  
+  .left-panel ul li.active {
+    font-weight: bold;
+    transition: all .1s;
+  }
+  
+  .right-panel {
+    position: relative;
+    flex: 0.75;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    align-items: center;
+  }
+
+  .right-panel::before, .right-panel::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.5;
+    z-index: 1;
+  }
+  
+  .right-panel::before {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.8), rgba(255, 140, 0, 0.8));
+    top: -50px;
+    right: -100px;
+  }
+  
+  .right-panel::after {
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(135, 206, 250, 0.8), rgba(70, 130, 180, 0.8));
+    bottom: -50px;
+    left: -100px;
+  }
+  
+  form {
+    z-index: 10;
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+  }
+  
+  .form-step {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-step label {
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+  
+  .form-step input {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .sign-up-container button {
+    padding: 0.75rem 1.5rem;
+    background-color: #009FE3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .sign-up-container button:hover {
+    background-color: #007BB5;
+  }
+  
+  .sign-up-container button + button {
+    margin-left: 1rem;
+  }
+  
+  .circle-div {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ffffff83;
+    border-radius: 50%;
+    margin-right: .5rem;
+    transition: all .3s;
+}
+
+
+.circle-div.active {
+    border: 1px solid #FFF;
+    background-color: #ffffff54;
+}
+
+.last-buttons, .last-buttons button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: .5rem;
+}
+
+
+.back-button {
+    background-color: #009FE3;
+    position: relative;
+    color: white;
+    border: none;
+    text-decoration: none;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all .3s;
+  }
+
+  .back-button:hover {
+    transform: scale(1.1);
+  }

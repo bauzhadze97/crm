@@ -1,0 +1,167 @@
+.sidebar {
+    position: relative;
+    width: 250px;
+    background-color: #fff;
+    color: rgb(161, 161, 161);
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow-y: scroll;
+  }
+  
+  .menu ul a {
+    font-size: 12px;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    display: flex;
+    text-decoration: none;
+    color: #7c7c7c;
+    align-items: center;
+  }
+  
+  .menu ul a.active, .menu ul a.active:hover {
+    background-color: #009fe348;
+    color: #009FE3;
+    border-radius: 1rem;
+  }
+  
+  .menu ul a.active img {
+    margin-right: 0.5rem;
+  }
+  
+  .menu ul a:hover {
+    background-color: #f5f5f5;
+    color: #009FE3;
+  }
+
+  .support {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .support button {
+    background-color: #ffca28;
+    color: #009FE3;
+    border: none;
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .support button img {
+    margin-right: 0.5rem;
+  }
+  
+  .support .logout-btn {
+    background-color: #009FE3;
+    color: white;
+    position: absolute;
+    bottom: 30px;
+    transform: translateX(12%);
+  }
+  
+  .support button:hover {
+    opacity: 0.8;
+  }
+
+  .sidebar-opener {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-left: 2rem;
+    margin-top: .7rem;
+    background-color: #24c1ff;
+    border: 3px solid #105D8D;
+    color: #fff;
+    font-size: 16px;
+    padding: .5rem 1rem;
+    border-radius: 1rem;
+    z-index: 100;
+  }
+
+  .close-btn {
+    text-decoration: none;
+    color: #fff;
+    border: 1px solid #009FE3;
+    background-color: #009FE3;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(-50%, 50%);
+    display: none;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .sidebar {
+      position: absolute;
+      z-index: 100;
+      min-height: 90vh;
+      box-shadow: inset;
+      border: .2px solid #009FE3;
+    }
+
+    .logo {
+      margin-top: 1rem;
+      
+    }
+
+    .user-info {
+      color: #fff;
+      background-color: #24c1ff;
+      z-index: 99;
+    }
+
+    .close-btn {
+      display: block;
+    }
+
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari, Opera */
+  }
+
+
+  .custom-scrollbar {
+    scrollbar-width: thin;       /* For Firefox */
+    scrollbar-color: #018AD1 transparent; /* Scrollbar thumb and track color */
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 1px;                  /* For WebKit browsers */
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #018AD1;   /* Scrollbar thumb color */
+  }
+
+  .language-btn {
+    position: absolute;
+    width: 30px;
+    cursor: pointer;
+    top: 2rem; 
+    right: 1rem;
+    /* transform: translateX(-50%); */
+  }
