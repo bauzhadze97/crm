@@ -1,6 +1,6 @@
 /* index.css */
 body {
-  overflow: hidden;
+  background:#007AD3;
 }
 .vacation-dashboard-container {
     display: flex;
@@ -10,6 +10,7 @@ body {
   .main-form-container {
     flex: 1;
     padding: 20px;
+    height: fit-content;
   }
   
   .form-container {
