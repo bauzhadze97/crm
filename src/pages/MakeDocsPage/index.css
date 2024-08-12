@@ -1,7 +1,7 @@
 /* index.css */
-body {
+/* body {
   overflow: hidden;
-}
+} */
 .vacation-dashboard-container {
     display: flex;
     height: 100vh;
@@ -10,6 +10,7 @@ body {
   .main-form-container {
     flex: 1;
     padding: 20px;
+    object-fit: contain;
   }
   
   .form-container {

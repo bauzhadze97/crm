@@ -23,6 +23,10 @@ const CreatedDailyTaskPage = () => {
         fetchDailies();
     }, []);
 
+    const handleDelete = (id) => {
+        // Implement the delete functionality
+    };
+
     return (
         <div className="vacation-dashboard-container">
             <Sidebar />
@@ -48,7 +52,7 @@ const CreatedDailyTaskPage = () => {
                                         <td>{daily.name}</td>
                                         <td>{daily.user?.department?.name || 'No Department'}</td>
                                         <td>{daily.user?.name || 'No User'}</td>
-                                        <td>{daily.description}</td>
+                                        <td>test</td>
                                         <td>
                                             <div className="flex justify-center">
                                                 <a href={`/dailies/${daily.id}`}><img src={VisibilityIcon} alt="View" className="action-icon" /></a>
