@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Sidebar from '../../components/Sidebar';
 import './index.css';
 import { createDaily } from '../../services/daily';
@@ -9,6 +12,8 @@ const DailyTaskReportPage = () => {
         selectDate: '',
         description: ''
     });
+
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -31,8 +36,11 @@ const DailyTaskReportPage = () => {
             // Call the createDaily function to create a new daily report
             const response = await createDaily(data);
 
-            // Handle success (e.g., show a success message, redirect, etc.)
-            console.log('Daily report created successfully:', response.data);
+            // Show success toast notification
+            toast.success('Task added successfully!', {
+                position: 'top-right',
+                autoClose: 3000, // close after 3 seconds
+            });
 
             // Clear the form fields after submission
             setFormData({
@@ -41,8 +49,17 @@ const DailyTaskReportPage = () => {
                 description: ''
             });
 
+            // Navigate to the daily task report page after a short delay
+            setTimeout(() => {
+                navigate('/daily-tasks');
+            }, 2000);
+
         } catch (error) {
             // Handle errors (e.g., show an error message)
+            toast.error('Error creating daily report!', {
+                position: 'top-right',
+                autoClose: 3000, // close after 3 seconds
+            });
             console.error('Error creating daily report:', error);
         }
     };
@@ -87,6 +104,8 @@ const DailyTaskReportPage = () => {
                     </form>
                 </div>
             </div>
+            {/* Include ToastContainer to render toasts */}
+            <ToastContainer />
         </div>
     );
 };
