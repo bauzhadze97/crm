@@ -112,7 +112,7 @@ function App() {
             } 
           />
            <Route 
-            path="/make-comment" 
+            path="/make-comment/:id" 
             element={
               <ProtectedRoute>
                 <MakeCommentPage/>
