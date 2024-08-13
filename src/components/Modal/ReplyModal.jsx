@@ -19,7 +19,7 @@ const ReplyModal = ({ open, handleClose, handleSave, parentCommentId }) => {
     };
 
     return (
-        <Dialog open={open} onClose={handleClose}>
+        <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
             <DialogTitle>Reply to Comment</DialogTitle>
             <DialogContent>
                 <DialogContentText>
@@ -34,13 +34,14 @@ const ReplyModal = ({ open, handleClose, handleSave, parentCommentId }) => {
                     fullWidth
                     multiline
                     rows={4}
+                    variant="outlined"
                     value={reply}
                     onChange={(e) => setReply(e.target.value)}
                 />
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleClose}>Cancel</Button>
-                <Button onClick={handleSubmit} color="primary">Save Reply</Button>
+                <Button onClick={handleClose} color="secondary">Cancel</Button>
+                <Button onClick={handleSubmit} color="primary" variant="contained">Save Reply</Button>
             </DialogActions>
         </Dialog>
     );

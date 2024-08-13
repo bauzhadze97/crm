@@ -4,7 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Sidebar from '../../components/Sidebar';
 import ReplyModal from '../../components/Modal/ReplyModal';
-import { Button } from '@mui/material';
+import { Button, Card, CardContent, Typography } from '@mui/material';
 import './index.css';
 import { createDailyComment, getDailyComment, updateDailyComment } from '../../services/dailyComment';
 import { getDepartments } from '../../services/auth';
@@ -111,18 +111,18 @@ const MakeCommentPage = () => {
         return comments
             .filter(comment => comment.parent_id === parentId)
             .map(comment => (
-                <div key={comment.id} className="comment-card">
-                    <div className="comment-header">
-                        <strong>{comment.user.name}</strong>
-                        <span>{new Date(comment.created_at).toLocaleString()}</span>
-                    </div>
-                    <p className="comment-text">{comment.comment}</p>
-                    <span className="comment-department">{comment.department?.name}</span>
-                    <Button variant="outlined" size="small" onClick={() => handleReply(comment.id)}>Reply</Button>
-                    <div className="replies">
-                        {renderComments(comments, comment.id)}
-                    </div>
-                </div>
+                <Card key={comment.id} className="comment-card">
+                    <CardContent>
+                        <Typography variant="subtitle1" style={comment.id === 1 ? { color: 'yellow' } : {}}><strong>{comment.user.name}</strong></Typography>
+                        <Typography variant="body2" color="textSecondary">{new Date(comment.created_at).toLocaleString()}</Typography>
+                        <Typography variant="body1" className="comment-text" style={comment.id === 1 ? { color: 'yellow' } : {}}>{comment.comment}</Typography>
+                        <Typography variant="body2" color="textSecondary" className="comment-department">{comment.department?.name}</Typography>
+                        <Button variant="outlined" size="small" onClick={() => handleReply(comment.id)}>Reply</Button>
+                        <div className="replies">
+                            {renderComments(comments, comment.id)}
+                        </div>
+                    </CardContent>
+                </Card>
             ));
     };
 
