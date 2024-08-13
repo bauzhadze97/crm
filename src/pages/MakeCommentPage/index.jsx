@@ -88,6 +88,7 @@ const MakeCommentPage = () => {
             <div className='main-form-container'>
                 <div className="form-container">
                     <h2 className='page-name'>Daily Task Report Comment</h2>
+                    {daily && (
                     <form className="task-report-form" onSubmit={handleSubmit}>
                         <label htmlFor="comment">Comment</label>
                         <textarea disabled
@@ -115,7 +116,7 @@ const MakeCommentPage = () => {
                             <button type="submit">+ {id ? 'Update' : 'Add'} Comment</button>
                         </div>
                     </form>
-              
+              )}
                 </div>
                 <div className='form-container1'>
                 <form className="task-report-form" onSubmit={handleSubmit}>
