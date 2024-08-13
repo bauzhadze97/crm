@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Sidebar from '../../components/Sidebar';
 import './index.css';
 import { createDailyComment, getDailyComment, updateDailyComment } from '../../services/dailyComment';
@@ -15,24 +17,10 @@ const MakeCommentPage = () => {
 
     useEffect(() => {
         if (id) {
-            // const fetchComment = async () => {
-            //     try {
-            //         const response = await getDailyComment(id);
-            //         setComment(response.data.comment);
-            //         setAssign(response.data.assign);
-            //         setSelectedDepartment(response.data.department_id);
-            //     } catch (error) {
-            //         console.error('Error fetching the comment:', error);
-            //     }
-            // };
-
-            // fetchComment();
-
             const fetchDaily = async () => {
                 try {
                     const response = await getDaily(id);
                     console.log(response);
-                    
                     setDaily(response.data); 
                 } catch (error) {
                     console.error('Error fetching the daily task:', error);
@@ -62,7 +50,7 @@ const MakeCommentPage = () => {
         const data = {
             comment: comment,
             department_id: selectedDepartment,
-            daily_id:id
+            daily_id: id
         };
 
         try {
@@ -73,53 +61,41 @@ const MakeCommentPage = () => {
                 ...prevDaily,
                 comments: [...prevDaily.comments, response.data]
             }));
+
+            // Show success notification
+            toast.success('Comment added successfully!');
+
+            // Clear comment and department fields
+            setComment('');
+            setSelectedDepartment('');
         } catch (error) {
             console.error('Error submitting the comment:', error);
         }
     };
 
     console.log(daily);
-    
-    
 
     return (
         <div className="vacation-dashboard-container">
             <Sidebar />
             <div className='main-form-container'>
+                <ToastContainer />
                 <div className="form-container">
-                    <h2 className='page-name'>Daily Task Report Comment</h2>
                     {daily && (
+                        <>
+                            <h2 className='page-name'>{daily.name}</h2>
+                            <form className="task-report-form">
+                                <label htmlFor="description">სრული აღწერა</label>
+                                <textarea
+                                    id="description"
+                                    name="description"
+                                    disabled
+                                    value={daily.description}
+                                />
+                            </form>
+                        </>
+                    )}
                     <form className="task-report-form" onSubmit={handleSubmit}>
-                        <label htmlFor="comment">Comment</label>
-                        <textarea disabled
-                            id="comment"
-                            name="comment"
-                            placeholder="Enter your comment here..."
-                            value={daily.description}
-                            
-                        />
-                        <label htmlFor="department">Select Department</label>
-                        <select
-                            id="department"
-                            name="department"
-                            value={selectedDepartment}
-                            onChange={(e) => setSelectedDepartment(e.target.value)}
-                        >
-                            <option value="" disabled>Select a department</option>
-                            {departments && departments.map(department => (
-                                <option key={department.id} value={department.id}>
-                                    {department.name}
-                                </option>
-                            ))}
-                        </select>
-                        <div className='button-container'>
-                            <button type="submit">+ {id ? 'Update' : 'Add'} Comment</button>
-                        </div>
-                    </form>
-              )}
-                </div>
-                <div className='form-container1'>
-                <form className="task-report-form" onSubmit={handleSubmit}>
                         <label htmlFor="comment">Comment</label>
                         <textarea
                             id="comment"
@@ -128,7 +104,7 @@ const MakeCommentPage = () => {
                             value={comment}
                             onChange={(e) => setComment(e.target.value)}
                         />
-                        <label htmlFor="department">Select Department</label>
+                        <label htmlFor="department">აირჩიე დეპარტამენტი</label>
                         <select
                             id="department"
                             name="department"
@@ -146,9 +122,11 @@ const MakeCommentPage = () => {
                             <button type="submit">+ {id ? 'Update' : 'Add'} Comment</button>
                         </div>
                     </form>
-                {daily && daily.comments && daily.comments.length > 0 && (
+                </div>
+                <div className='form-container1'>
+                    {daily && daily.comments && (
                         <div className="comments-section">
-                            <h3>Comments</h3>
+                            <h3>კომენტარები ({daily.comments.length})</h3> {/* Display comment count */}
                             <div className="comments-list">
                                 {daily.comments.map(comment => (
                                     <div key={comment.id} className="comment-card">
