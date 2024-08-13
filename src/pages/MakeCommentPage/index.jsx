@@ -90,6 +90,36 @@ const MakeCommentPage = () => {
                     <h2 className='page-name'>Daily Task Report Comment</h2>
                     <form className="task-report-form" onSubmit={handleSubmit}>
                         <label htmlFor="comment">Comment</label>
+                        <textarea disabled
+                            id="comment"
+                            name="comment"
+                            placeholder="Enter your comment here..."
+                            value={daily.description}
+                            
+                        />
+                        <label htmlFor="department">Select Department</label>
+                        <select
+                            id="department"
+                            name="department"
+                            value={selectedDepartment}
+                            onChange={(e) => setSelectedDepartment(e.target.value)}
+                        >
+                            <option value="" disabled>Select a department</option>
+                            {departments && departments.map(department => (
+                                <option key={department.id} value={department.id}>
+                                    {department.name}
+                                </option>
+                            ))}
+                        </select>
+                        <div className='button-container'>
+                            <button type="submit">+ {id ? 'Update' : 'Add'} Comment</button>
+                        </div>
+                    </form>
+              
+                </div>
+                <div className='form-container1'>
+                <form className="task-report-form" onSubmit={handleSubmit}>
+                        <label htmlFor="comment">Comment</label>
                         <textarea
                             id="comment"
                             name="comment"
@@ -115,7 +145,7 @@ const MakeCommentPage = () => {
                             <button type="submit">+ {id ? 'Update' : 'Add'} Comment</button>
                         </div>
                     </form>
-                    {daily && daily.comments && daily.comments.length > 0 && (
+                {daily && daily.comments && daily.comments.length > 0 && (
                         <div className="comments-section">
                             <h3>Comments</h3>
                             <div className="comments-list">
