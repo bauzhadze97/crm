@@ -18,7 +18,11 @@ export const getDailyList = async (page = 1, limit = 10, sortBy = 'created_at', 
 };
 
 export const createDaily = async (data) => {
-    return defaultInstance.post('/api/dailies', data);
+    return defaultInstance.post('/api/dailies', data, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
 }
 
 export const getDaily = async (id) => {

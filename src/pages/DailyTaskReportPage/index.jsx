@@ -10,9 +10,10 @@ const DailyTaskReportPage = () => {
     const [formData, setFormData] = useState({
         reportTitle: '',
         selectDate: '',
-        description: ''
+        description: '',
+        link: '',
     });
-
+    const [attachment, setAttachment] = useState(null);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -23,42 +24,47 @@ const DailyTaskReportPage = () => {
         });
     };
 
+    const handleFileChange = (e) => {
+        setAttachment(e.target.files[0]);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const data = {
-            name: formData.reportTitle,
-            date: formData.selectDate,
-            description: formData.description,
-        };
+        const data = new FormData();
+        data.append('name', formData.reportTitle);
+        data.append('date', formData.selectDate);
+        data.append('description', formData.description);
+        data.append('link', formData.link);
+
+        if (attachment) {
+            data.append('attachment', attachment);
+        }
 
         try {
-            // Call the createDaily function to create a new daily report
             const response = await createDaily(data);
 
-            // Show success toast notification
             toast.success('Task added successfully!', {
                 position: 'top-right',
-                autoClose: 3000, // close after 3 seconds
+                autoClose: 3000,
             });
 
-            // Clear the form fields after submission
             setFormData({
                 reportTitle: '',
                 selectDate: '',
-                description: ''
+                description: '',
+                link: '',
             });
+            setAttachment(null);
 
-            // Navigate to the daily task report page after a short delay
             setTimeout(() => {
                 navigate('/daily-tasks');
             }, 2000);
 
         } catch (error) {
-            // Handle errors (e.g., show an error message)
             toast.error('Error creating daily report!', {
                 position: 'top-right',
-                autoClose: 3000, // close after 3 seconds
+                autoClose: 3000,
             });
             console.error('Error creating daily report:', error);
         }
@@ -98,13 +104,32 @@ const DailyTaskReportPage = () => {
                             value={formData.description}
                             onChange={handleChange}
                         />
+
+                        <label htmlFor="link">Link</label>
+                        <input
+                            type="url"
+                            id="link"
+                            name="link"
+                            placeholder="Enter the link here..."
+                            value={formData.link}
+                            onChange={handleChange}
+                        />
+
+                        <label htmlFor="attachment">Attachment</label>
+                        <input
+                            type="file"
+                            id="attachment"
+                            name="attachment"
+                            accept=".jpg,.jpeg,.png,.pdf,.doc,.docx"
+                            onChange={handleFileChange}
+                        />
+
                         <div className='button-container'>
-                            <button type="submit">+ Add Comment</button>
+                            <button type="submit">+ Add Task</button>
                         </div>
                     </form>
                 </div>
             </div>
-            {/* Include ToastContainer to render toasts */}
             <ToastContainer />
         </div>
     );
