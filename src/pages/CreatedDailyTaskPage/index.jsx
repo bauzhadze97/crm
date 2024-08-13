@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Sidebar from "../../components/Sidebar";
-import DeleteIcon from '../../assets/images/delete.png';
-import EditIcon from '../../assets/images/edit.png';
-import VisibilityIcon from '../../assets/images/visibility.png';
 import './index.css';
 import { getDailyList } from '../../services/daily';
 import { Link } from 'react-router-dom';
@@ -27,10 +24,6 @@ const CreatedDailyTaskPage = () => {
         fetchDailies();
     }, [currentPage, itemsPerPage]);
 
-    const handleDelete = (id) => {
-        // Implement the delete functionality
-    };
-
     const handlePreviousPage = () => {
         if (currentPage > 1) {
             setCurrentPage(currentPage - 1);
@@ -46,6 +39,17 @@ const CreatedDailyTaskPage = () => {
     const handleItemsPerPageChange = (e) => {
         setItemsPerPage(parseInt(e.target.value));
         setCurrentPage(1); // Reset to the first page when items per page changes
+    };
+
+    const getRowStyle = (daily) => {
+        if (daily.comments.length === 0) {
+            return { backgroundColor: 'yellow' };
+        }
+        const hasAdminComment = daily.comments.some(comment => comment.user.id === 1);
+        if (hasAdminComment) {
+            return { backgroundColor: 'green' };
+        }
+        return {};
     };
 
     return (
@@ -72,30 +76,22 @@ const CreatedDailyTaskPage = () => {
                                 <th>Department</th>
                                 <th>Name/Surname</th>
                                 <th>Description</th>
-                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             {dailies.length > 0 ? (
                                 dailies.map((daily) => (
-                                    <tr key={daily.id}>
+                                    <tr key={daily.id} style={getRowStyle(daily)}>
                                         <td>{new Date(daily.date).toLocaleDateString()}</td>
                                         <td><Link to={`/make-comment/${daily.id}`}>{daily.name}</Link></td>
                                         <td>{daily.user?.department?.name || 'No Department'}</td>
                                         <td>{daily.user?.name || 'No User' }/ {daily.user?.sur_name}</td>
                                         <td>{daily.user?.name || 'No Description'}</td>
-                                        <td>
-                                            <div className="flex justify-center">
-                                                <a href={`/dailies/${daily.id}`}><img src={VisibilityIcon} alt="View" className="action-icon" /></a>
-                                                <Link to={`/make-comment/${daily.id}`}><img src={EditIcon} alt="Edit" className="action-icon" /></Link>
-                                                <button onClick={() => handleDelete(daily.id)}><img src={DeleteIcon} alt="Delete" className="action-icon" /></button>
-                                            </div>
-                                        </td>
                                     </tr>
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan="6">No Daily Task Reports found.</td>
+                                    <td colSpan="5">No Daily Task Reports found.</td>
                                 </tr>
                             )}
                         </tbody>
