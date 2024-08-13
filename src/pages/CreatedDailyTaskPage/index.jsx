@@ -13,7 +13,7 @@ const CreatedDailyTaskPage = () => {
     useEffect(() => {
         const fetchDailies = async () => {
             try {
-                const response = await getDailyList(currentPage, itemsPerPage);
+                const response = await getDailyList(currentPage, itemsPerPage, 'created_at', 'desc');
                 setDailies(response.data.data);
                 setTotalPages(response.data.last_page);
             } catch (error) {
@@ -43,11 +43,11 @@ const CreatedDailyTaskPage = () => {
 
     const getRowStyle = (daily) => {
         if (daily.comments.length === 0) {
-            return { backgroundColor: 'yellow' };
+            return { backgroundColor: '#800020', color: 'white' };
         }
         const hasAdminComment = daily.comments.some(comment => comment.user.id === 1);
         if (hasAdminComment) {
-            return { backgroundColor: 'green' };
+            return { backgroundColor: '#00CB08' };
         }
         return {};
     };
@@ -71,22 +71,22 @@ const CreatedDailyTaskPage = () => {
                     <table className="custom-table">
                         <thead>
                             <tr>
+                                <th>Ticket ID</th>
                                 <th>Date</th>
                                 <th>Daily Task Name</th>
                                 <th>Department</th>
                                 <th>Name/Surname</th>
-                                <th>Description</th>
                             </tr>
                         </thead>
                         <tbody>
                             {dailies.length > 0 ? (
                                 dailies.map((daily) => (
                                     <tr key={daily.id} style={getRowStyle(daily)}>
+                                        <td><Link to={`/make-comment/${daily.id}`}>{daily.id}</Link></td>
                                         <td>{new Date(daily.date).toLocaleDateString()}</td>
-                                        <td><Link to={`/make-comment/${daily.id}`}>{daily.name}</Link></td>
+                                        <td><Link to={`/make-comment/${daily.id}`} style={{ color: 'inherit' }}>{daily.name}</Link></td>
                                         <td>{daily.user?.department?.name || 'No Department'}</td>
                                         <td>{daily.user?.name || 'No User' }/ {daily.user?.sur_name}</td>
-                                        <td>{daily.user?.name || 'No Description'}</td>
                                     </tr>
                                 ))
                             ) : (

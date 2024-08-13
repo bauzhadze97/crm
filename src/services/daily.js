@@ -1,11 +1,13 @@
 import defaultInstance from '../plugins/axios';
 
-export const getDailyList = async (page = 1, limit = 10) => {
+export const getDailyList = async (page = 1, limit = 10, sortBy = 'created_at', order = 'desc') => {
     try {
         const response = await defaultInstance.get('/api/dailies', {
             params: {
                 page: page,
-                limit: limit
+                limit: limit,
+                sortBy: sortBy,
+                order: order
             }
         });
         return response;
