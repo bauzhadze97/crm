@@ -93,6 +93,20 @@ const MakeCommentPage = () => {
                                     value={daily.description}
                                 />
                             </form>
+                            {daily.attachment && (
+                                <div className="attachment-section">
+                                    <label>Attachment: </label>
+                                    <a href={`${process.env.REACT_APP_API_URL}/storage/${daily.attachment}`} target="_blank" rel="noopener noreferrer" download>
+                                        Download Attachment
+                                    </a>
+                                </div>
+                            )}
+                            {daily.link && (
+                                <div className="link-section">
+                                    <label>Link: </label>
+                                    <a href={daily.link} target="_blank" rel="noopener noreferrer">{daily.link}</a>
+                                </div>
+                            )}
                         </>
                     )}
                     <form className="task-report-form" onSubmit={handleSubmit}>
