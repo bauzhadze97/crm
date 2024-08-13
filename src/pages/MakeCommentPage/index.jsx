@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar';
-
 import './index.css';
 import { createDailyComment, getDailyComment, updateDailyComment } from '../../services/dailyComment';
 import { getDepartments } from '../../services/auth';

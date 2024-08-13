@@ -49,7 +49,7 @@ const CreatedDailyTaskPage = () => {
                                 dailies.map((daily) => (
                                     <tr key={daily.id}>
                                         <td>{new Date(daily.date).toLocaleDateString()}</td>
-                                        <td>{daily.name}</td>
+                                        <td><Link to={`/make-comment/${daily.id}`}>{daily.name}</Link></td>
                                         <td>{daily.user?.department?.name || 'No Department'}</td>
                                         <td>{daily.user?.name || 'No User'}</td>
                                         <td>test</td>
