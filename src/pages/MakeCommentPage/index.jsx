@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Sidebar from '../../components/Sidebar';
+import ReplyModal from '../../components/Modal/ReplyModal';
+import { Button } from '@mui/material';
 import './index.css';
 import { createDailyComment, getDailyComment, updateDailyComment } from '../../services/dailyComment';
 import { getDepartments } from '../../services/auth';
@@ -14,6 +16,8 @@ const MakeCommentPage = () => {
     const [departments, setDepartments] = useState([]);
     const [selectedDepartment, setSelectedDepartment] = useState('');
     const [daily, setDaily] = useState(null);
+    const [openModal, setOpenModal] = useState(false);
+    const [replyingTo, setReplyingTo] = useState(null);
 
     useEffect(() => {
         if (id) {
@@ -73,6 +77,55 @@ const MakeCommentPage = () => {
         }
     };
 
+    const handleReply = (commentId) => {
+        setReplyingTo(commentId);
+        setOpenModal(true);
+    };
+
+    const handleSaveReply = async (parentCommentId, reply) => {
+        const data = {
+            comment: reply,
+            department_id: selectedDepartment,
+            daily_id: id,
+            parent_id: parentCommentId
+        };
+
+        try {
+            const response = await createDailyComment(data);
+            console.log(response);
+
+            setDaily((prevDaily) => ({
+                ...prevDaily,
+                comments: [...prevDaily.comments, response.data]
+            }));
+
+            // Show success notification
+            toast.success('Reply added successfully!');
+            setOpenModal(false);
+        } catch (error) {
+            console.error('Error submitting the reply:', error);
+        }
+    };
+
+    const renderComments = (comments, parentId = null) => {
+        return comments
+            .filter(comment => comment.parent_id === parentId)
+            .map(comment => (
+                <div key={comment.id} className="comment-card">
+                    <div className="comment-header">
+                        <strong>{comment.user.name}</strong>
+                        <span>{new Date(comment.created_at).toLocaleString()}</span>
+                    </div>
+                    <p className="comment-text">{comment.comment}</p>
+                    <span className="comment-department">{comment.department?.name}</span>
+                    <Button variant="outlined" size="small" onClick={() => handleReply(comment.id)}>Reply</Button>
+                    <div className="replies">
+                        {renderComments(comments, comment.id)}
+                    </div>
+                </div>
+            ));
+    };
+
     console.log(daily);
 
     return (
@@ -96,9 +149,9 @@ const MakeCommentPage = () => {
                             {daily.attachment && (
                                 <div className="attachment-section">
                                     <label>Attachment: </label>
-                                    <a href={`${process.env.REACT_APP_API_URL}/storage/${daily.attachment}`} target="_blank" rel="noopener noreferrer" download>
+                                    {/* <a href={`${process.env.REACT_APP_API_URL}/storage/${daily.attachment}`} target="_blank" rel="noopener noreferrer" download>
                                         Download Attachment
-                                    </a>
+                                    </a> */}
                                 </div>
                             )}
                             {daily.link && (
@@ -133,30 +186,27 @@ const MakeCommentPage = () => {
                             ))}
                         </select>
                         <div className='button-container'>
-                            <button type="submit">+ {id ? 'Update' : 'Add'} Comment</button>
+                            <Button variant="contained" color="primary" type="submit">+ Add Comment</Button>
                         </div>
                     </form>
                 </div>
                 <div className='form-container1'>
                     {daily && daily.comments && (
                         <div className="comments-section">
-                            <h3>კომენტარები ({daily.comments.length})</h3> {/* Display comment count */}
+                            <h3>კომენტარები ({daily.comments.length})</h3>
                             <div className="comments-list">
-                                {daily.comments.map(comment => (
-                                    <div key={comment.id} className="comment-card">
-                                        <div className="comment-header">
-                                            <strong>{comment.user.name}</strong>
-                                            <span>{new Date(comment.created_at).toLocaleString()}</span>
-                                        </div>
-                                        <p className="comment-text">{comment?.comment}</p>
-                                        <span className="comment-department">{comment?.department?.name}</span>
-                                    </div>
-                                ))}
+                                {renderComments(daily.comments)}
                             </div>
                         </div>
                     )}
                 </div>
             </div>
+            <ReplyModal
+                open={openModal}
+                handleClose={() => setOpenModal(false)}
+                handleSave={handleSaveReply}
+                parentCommentId={replyingTo}
+            />
         </div>
     );
 };
