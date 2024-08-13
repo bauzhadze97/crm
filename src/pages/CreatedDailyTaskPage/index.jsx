@@ -51,8 +51,8 @@ const CreatedDailyTaskPage = () => {
                                         <td>{new Date(daily.date).toLocaleDateString()}</td>
                                         <td><Link to={`/make-comment/${daily.id}`}>{daily.name}</Link></td>
                                         <td>{daily.user?.department?.name || 'No Department'}</td>
-                                        <td>{daily.user?.name || 'No User'}</td>
-                                        <td>test</td>
+                                        <td>{daily.user?.name || 'No User'} / {daily.user?.surname || 'No Surname'}</td>
+                                        <td>{daily.user?.name || 'No Description'}</td>
                                         <td>
                                             <div className="flex justify-center">
                                                 <a href={`/dailies/${daily.id}`}><img src={VisibilityIcon} alt="View" className="action-icon" /></a>

@@ -3,13 +3,18 @@
     font-family: 'Arial', sans-serif;
 }
 
-
+.main-form-container {
+    flex-grow: 1;
+    padding: 20px;
+    overflow: auto; /* Ensure the container can scroll */
+}
 
 .table-container {
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
+    overflow-x: auto; /* Enable horizontal scrolling */
 }
 
 .page-name {
@@ -31,6 +36,7 @@
 .custom-table th, .custom-table td {
     padding: 12px 15px;
     text-align: left;
+    white-space: nowrap; /* Prevent text from wrapping */
 }
 
 .custom-table tbody tr {
