@@ -9,22 +9,43 @@ import { Link } from 'react-router-dom';
 
 const CreatedDailyTaskPage = () => {
     const [dailies, setDailies] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(10);
 
     useEffect(() => {
         const fetchDailies = async () => {
             try {
-                const response = await getDailyList();
-                setDailies(response.data.data); 
+                const response = await getDailyList(currentPage, itemsPerPage);
+                setDailies(response.data.data);
+                setTotalPages(response.data.last_page);
             } catch (error) {
                 console.error('Error fetching dailies:', error);
             }
         };
 
         fetchDailies();
-    }, []);
+    }, [currentPage, itemsPerPage]);
 
     const handleDelete = (id) => {
         // Implement the delete functionality
+    };
+
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handleItemsPerPageChange = (e) => {
+        setItemsPerPage(parseInt(e.target.value));
+        setCurrentPage(1); // Reset to the first page when items per page changes
     };
 
     return (
@@ -33,6 +54,16 @@ const CreatedDailyTaskPage = () => {
             <div className='main-form-container'>
                 <div className="table-container">
                     <h2 className="page-name">All Daily Task Report</h2>
+                    <div className="pagination-controls">
+                        <label htmlFor="itemsPerPage">Items per page: </label>
+                        <select id="itemsPerPage" value={itemsPerPage} onChange={handleItemsPerPageChange}>
+                            <option value={10}>10</option>
+                            <option value={20}>20</option>
+                            <option value={30}>30</option>
+                            <option value={40}>40</option>
+                            <option value={50}>50</option>
+                        </select>
+                    </div>
                     <table className="custom-table">
                         <thead>
                             <tr>
@@ -51,7 +82,7 @@ const CreatedDailyTaskPage = () => {
                                         <td>{new Date(daily.date).toLocaleDateString()}</td>
                                         <td><Link to={`/make-comment/${daily.id}`}>{daily.name}</Link></td>
                                         <td>{daily.user?.department?.name || 'No Department'}</td>
-                                        <td>{daily.user?.name || 'No User'} / {daily.user?.surname || 'No Surname'}</td>
+                                        <td>{daily.user?.name || 'No User' }/ {daily.user?.sur_name}</td>
                                         <td>{daily.user?.name || 'No Description'}</td>
                                         <td>
                                             <div className="flex justify-center">
@@ -70,9 +101,9 @@ const CreatedDailyTaskPage = () => {
                         </tbody>
                     </table>
                     <div className="pagination">
-                        <button>&lt;</button>
-                        <span>1 of 3</span>
-                        <button>&gt;</button>
+                        <button onClick={handlePreviousPage} disabled={currentPage === 1}>&lt;</button>
+                        <span>{currentPage} of {totalPages}</span>
+                        <button onClick={handleNextPage} disabled={currentPage === totalPages}>&gt;</button>
                     </div>
                 </div>
             </div>
