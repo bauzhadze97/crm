@@ -67,13 +67,9 @@ export default function Sidebar() {
             <Link to={'#'}><span className={`${location.pathname !== '/procurement' ? 'animate-link' : ''}`}>{t("my_discount")}</span></Link>
             <Link to={'/hr-docs'}><span className={`${location.pathname !== '/procurement' ? 'animate-link' : ''}`}>{t("hr_document")}</span></Link>
             <Link to={'#'}><span className={`${location.pathname !== '/procurement' ? 'animate-link' : ''}`}>Lead Gorgia</span></Link>
-            <Link to={'/create-daily'} className={`${location.pathname === '/create-daily' ? 'active' : ''}`}>
-              {location.pathname === '/create-daily' && <img src={SidebarIcon} alt="Daily Task Results" />}
-              <span className={`${location.pathname !== '/create-daily' ? 'animate-link' : ''}`}>{t("Create Daily")}</span>
-            </Link>
             <Link to={'/daily-tasks'} className={`${location.pathname === '/daily-tasks' ? 'active' : ''}`}>
               {location.pathname === '/daily-tasks' && <img src={SidebarIcon} alt="Daily Task Results" />}
-              <span className={`${location.pathname !== '/daily-tasks' ? 'animate-link' : ''}`}>{t("Daily Task Report")}</span>
+              <span className={`${location.pathname !== '/daily-tasks' ? 'animate-link' : ''}`}>{t("საკითხების დაფა")}</span>
             </Link>
             {/* <Link>Notes</Link> */}
             <Link to="https://gorgup.com/" target='_blank'><span className='animate-link'>Gorgup</span></Link>

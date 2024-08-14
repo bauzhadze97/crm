@@ -2,14 +2,22 @@ import React, { useEffect, useState } from 'react';
 import Sidebar from "../../components/Sidebar";
 import './index.css';
 import { getDailyList } from '../../services/daily';
+import { getDepartments } from '../../services/auth';
 import { Link } from 'react-router-dom';
-import { Button, Table, TableBody, TableCell, TableHead, TableRow, Select, MenuItem } from '@mui/material';
+import { Button, Table, TableBody, TableCell, TableHead, TableRow, Select, MenuItem, TextField, Grid, FormControl, InputLabel, FormControlLabel, Checkbox } from '@mui/material';
 
 const CreatedDailyTaskPage = () => {
     const [dailies, setDailies] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
+    const [filters, setFilters] = useState({
+        date: '',
+        taskName: '',
+        department: '',
+        adminNotCommented: false
+    });
+    const [departments, setDepartments] = useState([]);
 
     useEffect(() => {
         const fetchDailies = async () => {
@@ -25,6 +33,19 @@ const CreatedDailyTaskPage = () => {
 
         fetchDailies();
     }, [currentPage, itemsPerPage]);
+
+    useEffect(() => {
+        const fetchDepartments = async () => {
+            try {
+                const response = await getDepartments();
+                setDepartments(response.data.departments);
+            } catch (error) {
+                console.error('Error fetching departments:', error);
+            }
+        };
+
+        fetchDepartments();
+    }, []);
 
     const handlePreviousPage = () => {
         if (currentPage > 1) {
@@ -43,6 +64,14 @@ const CreatedDailyTaskPage = () => {
         setCurrentPage(1); // Reset to the first page when items per page changes
     };
 
+    const handleFilterChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        setFilters({
+            ...filters,
+            [name]: type === 'checkbox' ? checked : value
+        });
+    };
+
     const getRowStyle = (daily) => {
         if (daily.comments.length === 0) {
             return { backgroundColor: '#800020', color: 'white' };
@@ -54,35 +83,106 @@ const CreatedDailyTaskPage = () => {
         return {};
     };
 
+    const filteredDailies = dailies.filter(daily => {
+        const adminHasNotCommented = filters.adminNotCommented ? !daily.comments.some(comment => comment.user.id === 1) : true;
+        return (
+            (filters.date === '' || new Date(daily.date).toLocaleDateString() === new Date(filters.date).toLocaleDateString()) &&
+            (filters.taskName === '' || daily.name.toLowerCase().includes(filters.taskName.toLowerCase())) &&
+            (filters.department === '' || daily.user?.department?.id === filters.department) &&
+            adminHasNotCommented
+        );
+    });
+
     return (
         <div className="vacation-dashboard-container">
             <Sidebar />
             <div className='main-form-container'>
                 <div className="table-container">
-                    <h2 className="page-name">All Daily Task Report</h2>
-                    <div className="pagination-controls">
-                        <label htmlFor="itemsPerPage">Items per page: </label>
-                        <Select id="itemsPerPage" value={itemsPerPage} onChange={handleItemsPerPageChange}>
-                            <MenuItem value={10}>10</MenuItem>
-                            <MenuItem value={20}>20</MenuItem>
-                            <MenuItem value={30}>30</MenuItem>
-                            <MenuItem value={40}>40</MenuItem>
-                            <MenuItem value={50}>50</MenuItem>
-                        </Select>
-                    </div>
+                    <h2 className="page-name">
+                        <div>დღის საკითხების დაფა</div>
+                        <div className='button-container'>
+                            <Link to='/create-daily'><Button variant="contained" color="primary">საკითხის გამოტანა</Button></Link>
+                        </div>
+                    </h2>
+                    <Grid container spacing={2} alignItems="center">
+                        <Grid item xs={12} sm={6} md={2}>
+                            <TextField
+                                fullWidth
+                                label="Filter by Date"
+                                type="date"
+                                name="date"
+                                value={filters.date}
+                                onChange={handleFilterChange}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={6} md={3}>
+                            <TextField
+                                fullWidth
+                                label="ფილტრი სახელწოდებით"
+                                name="taskName"
+                                value={filters.taskName}
+                                onChange={handleFilterChange}
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={6} md={3}>
+                            <FormControl fullWidth>
+                                <InputLabel>ფილტრი დეპარტამენტების მიხედვით</InputLabel>
+                                <Select
+                                    name="department"
+                                    value={filters.department}
+                                    onChange={handleFilterChange}
+                                >
+                                    <MenuItem value="">ყველა დეპარტამენტი</MenuItem>
+                                    {departments.map(department => (
+                                        <MenuItem key={department.id} value={department.id}>
+                                            {department.name}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={6} md={2}>
+                            <FormControl fullWidth>
+                                
+                                <Select value={itemsPerPage} onChange={handleItemsPerPageChange}>
+                                    <MenuItem value={10}>10</MenuItem>
+                                    <MenuItem value={20}>20</MenuItem>
+                                    <MenuItem value={30}>30</MenuItem>
+                                    <MenuItem value={40}>40</MenuItem>
+                                    <MenuItem value={50}>50</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={6} md={2}>
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={filters.adminNotCommented}
+                                        onChange={handleFilterChange}
+                                        name="adminNotCommented"
+                                        color="primary"
+                                    />
+                                }
+                                label="ხელმძღვანელის კომენტარი"
+                            />
+                        </Grid>
+                    </Grid>
                     <Table className="custom-table">
                         <TableHead>
                             <TableRow>
-                                <TableCell>Ticket ID</TableCell>
-                                <TableCell>Date</TableCell>
-                                <TableCell>Daily Task Name</TableCell>
-                                <TableCell>Department</TableCell>
-                                <TableCell>Name/Surname</TableCell>
+                                <TableCell>საკითხის ნომერი</TableCell>
+                                <TableCell>თარიღი</TableCell>
+                                <TableCell>საკითხი</TableCell>
+                                <TableCell>დეპარტამენტი</TableCell>
+                                <TableCell>სახელი გვარი</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {dailies.length > 0 ? (
-                                dailies.map((daily) => (
+                            {filteredDailies.length > 0 ? (
+                                filteredDailies.map((daily) => (
                                     <TableRow key={daily.id} style={getRowStyle(daily)}>
                                         <TableCell>{daily.id}</TableCell>
                                         <TableCell>{new Date(daily.date).toLocaleDateString()}</TableCell>

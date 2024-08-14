@@ -7,6 +7,8 @@ import './index.css';
 import { createDaily } from '../../services/daily';
 import { forgotPassword, getDepartments } from '../../services/auth';
 
+
+
 const DailyTaskReportPage = () => {
     const [formData, setFormData] = useState({
         reportTitle: '',

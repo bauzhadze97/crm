@@ -18,61 +18,70 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: 100%;
+    height: auto;
     background-color: #fff;
     padding: 40px;
     
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* index.css */
+
+/* General styles for the form */
 .task-report-form {
-    max-width: 70%;
     display: flex;
     flex-direction: column;
+    gap: 16px;
 }
 
+/* Styles for labels */
 .task-report-form label {
-    margin-top: 20px;
-    margin-bottom: 5px;
     font-weight: bold;
-    color: #105D8D;
-    
+    margin-bottom: 4px;
 }
 
-.task-report-form input[type="text"],
-.task-report-form input[type="date"],
-.task-report-form textarea {
-    width: 100%;
-    padding: 20px;
-    margin-bottom: 10px;
-    border: 1px solid #105D8D;
-    border-radius: 12px;
-    outline: none;
-}
-
-.task-report-form textarea {
-    height: 200px;
-    resize: none;
-}
-
-.button-container{
-    display: flex;
-    justify-content: right;
-}
-
-.task-report-form button {
-    margin-top: 20px;
+/* General styles for inputs */
+.task-report-form input,
+.task-report-form textarea,
+.task-report-form select {
     padding: 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 4px;
     font-size: 16px;
-    color: yellow;
-    font-size: 20px;
 }
 
-.task-report-form button:hover {
+/* Specific styles for the select element */
+.task-report-form select {
+    appearance: none; /* Remove default dropdown arrow */
+    background: #fff url("data:image/svg+xml;utf8,<svg fill='%23333' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>") no-repeat right 10px center;
+    background-size: 16px 16px;
+    padding-right: 30px; /* Space for the arrow */
+}
+
+/* Style for options */
+.task-report-form option {
+    padding: 10px;
+    background: #fff;
+    color: #333;
+}
+
+/* Hover effect for options */
+.task-report-form option:hover {
+    background: #f0f0f0;
+}
+
+/* Style for the submit button */
+.button-container button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-container button:hover {
     background-color: #0056b3;
 }

@@ -60,5 +60,6 @@
     "business_trips": "Business trips",
     "duration": "Duration",
     "start_date": "Start Date",
-    "end_date": "End Date"
+    "end_date": "End Date",
+    "daily_report": "Daily Board"
 }

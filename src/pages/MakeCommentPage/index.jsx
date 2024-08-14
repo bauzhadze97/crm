@@ -10,6 +10,8 @@ import { createDailyComment, getDailyComment, updateDailyComment } from '../../s
 import { getDepartments } from '../../services/auth';
 import { getDaily } from '../../services/daily';
 
+
+
 const MakeCommentPage = () => {
     const { id } = useParams();
     const [comment, setComment] = useState('');
@@ -149,9 +151,9 @@ const MakeCommentPage = () => {
                             {daily.attachment && (
                                 <div className="attachment-section">
                                     <label>Attachment: </label>
-                                    <a href={`${process.env.REACT_APP_API_URL}/storage/${daily.attachment}`} target="_blank" rel="noopener noreferrer" download>
+                                    {/* <a href={`${process.env.REACT_APP_API_URL}/storage/${daily.attachment}`} target="_blank" rel="noopener noreferrer" download>
                                         Download Attachment
-                                    </a>
+                                    </a> */}
                                 </div>
                             )}
                             {daily.link && (

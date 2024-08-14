@@ -1,9 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@import url("//cdn.web-fonts.ge/fonts/bpg-rioni/css/bpg-rioni.min.css");
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "BPG Rioni", sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -11,6 +11,8 @@
 }
 
 body {
+  font-family: "BPG Rioni", sans-serif;
   margin: 0;
   padding: 0;
 }
+
