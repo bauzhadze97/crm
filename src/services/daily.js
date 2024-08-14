@@ -18,7 +18,19 @@ export const getDailyList = async (page = 1, limit = 10, sortBy = 'created_at', 
 };
 
 export const createDaily = async (data) => {
-    return defaultInstance.post('/api/dailies', data, {
+    console.log(data)
+    const formData = new FormData();
+    formData.append('name', data.reportTitle);
+    formData.append('date', data.selectDate);
+    formData.append('description', data.description);
+    formData.append('department_id', data.department); 
+    if (data.attachment) {
+        formData.append('attachment', data.attachment, data.attachment.name);
+    }
+    if (data.link) {
+        formData.append('link', data.link);
+    }
+    return defaultInstance.post('/api/dailies', formData, {
         headers: {
             'Content-Type': 'multipart/form-data'
         }
@@ -30,7 +42,22 @@ export const getDaily = async (id) => {
 }
 
 export const updateDaily = async (id, data) => {
-    return defaultInstance.put(`/api/dailies/${id}`, data);
+    const formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('date', data.date);
+    formData.append('description', data.description);
+    formData.append('department_id', data.department_id); // Add department_id
+    if (data.attachment) {
+        formData.append('attachment', data.attachment, data.attachment.name);
+    }
+    if (data.link) {
+        formData.append('link', data.link);
+    }
+    return defaultInstance.put(`/api/dailies/${id}`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
 }
 
 export const deleteDaily = async (id) => {

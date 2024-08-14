@@ -3,6 +3,7 @@ import Sidebar from "../../components/Sidebar";
 import './index.css';
 import { getDailyList } from '../../services/daily';
 import { Link } from 'react-router-dom';
+import { Button, Table, TableBody, TableCell, TableHead, TableRow, Select, MenuItem } from '@mui/material';
 
 const CreatedDailyTaskPage = () => {
     const [dailies, setDailies] = useState([]);
@@ -13,8 +14,9 @@ const CreatedDailyTaskPage = () => {
     useEffect(() => {
         const fetchDailies = async () => {
             try {
-                const response = await getDailyList(currentPage, itemsPerPage, 'created_at', 'desc');
-                setDailies(response.data.data);
+                const response = await getDailyList(currentPage, itemsPerPage);
+                const sortedData = response.data.data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                setDailies(sortedData);
                 setTotalPages(response.data.last_page);
             } catch (error) {
                 console.error('Error fetching dailies:', error);
@@ -60,46 +62,46 @@ const CreatedDailyTaskPage = () => {
                     <h2 className="page-name">All Daily Task Report</h2>
                     <div className="pagination-controls">
                         <label htmlFor="itemsPerPage">Items per page: </label>
-                        <select id="itemsPerPage" value={itemsPerPage} onChange={handleItemsPerPageChange}>
-                            <option value={10}>10</option>
-                            <option value={20}>20</option>
-                            <option value={30}>30</option>
-                            <option value={40}>40</option>
-                            <option value={50}>50</option>
-                        </select>
+                        <Select id="itemsPerPage" value={itemsPerPage} onChange={handleItemsPerPageChange}>
+                            <MenuItem value={10}>10</MenuItem>
+                            <MenuItem value={20}>20</MenuItem>
+                            <MenuItem value={30}>30</MenuItem>
+                            <MenuItem value={40}>40</MenuItem>
+                            <MenuItem value={50}>50</MenuItem>
+                        </Select>
                     </div>
-                    <table className="custom-table">
-                        <thead>
-                            <tr>
-                                <th>Ticket ID</th>
-                                <th>Date</th>
-                                <th>Daily Task Name</th>
-                                <th>Department</th>
-                                <th>Name/Surname</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <Table className="custom-table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Ticket ID</TableCell>
+                                <TableCell>Date</TableCell>
+                                <TableCell>Daily Task Name</TableCell>
+                                <TableCell>Department</TableCell>
+                                <TableCell>Name/Surname</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
                             {dailies.length > 0 ? (
                                 dailies.map((daily) => (
-                                    <tr key={daily.id} style={getRowStyle(daily)}>
-                                        <td><Link to={`/make-comment/${daily.id}`}>{daily.id}</Link></td>
-                                        <td>{new Date(daily.date).toLocaleDateString()}</td>
-                                        <td><Link to={`/make-comment/${daily.id}`} style={{ color: 'inherit' }}>{daily.name}</Link></td>
-                                        <td>{daily.user?.department?.name || 'No Department'}</td>
-                                        <td>{daily.user?.name || 'No User' }/ {daily.user?.sur_name}</td>
-                                    </tr>
+                                    <TableRow key={daily.id} style={getRowStyle(daily)}>
+                                        <TableCell>{daily.id}</TableCell>
+                                        <TableCell>{new Date(daily.date).toLocaleDateString()}</TableCell>
+                                        <TableCell><Link to={`/make-comment/${daily.id}`}>{daily.name}</Link></TableCell>
+                                        <TableCell>{daily.user?.department?.name || 'No Department'}</TableCell>
+                                        <TableCell>{daily.user?.name || 'No User' }/ {daily.user?.sur_name}</TableCell>
+                                    </TableRow>
                                 ))
                             ) : (
-                                <tr>
-                                    <td colSpan="5">No Daily Task Reports found.</td>
-                                </tr>
+                                <TableRow>
+                                    <TableCell colSpan={5}>No Daily Task Reports found.</TableCell>
+                                </TableRow>
                             )}
-                        </tbody>
-                    </table>
+                        </TableBody>
+                    </Table>
                     <div className="pagination">
-                        <button onClick={handlePreviousPage} disabled={currentPage === 1}>&lt;</button>
+                        <Button onClick={handlePreviousPage} disabled={currentPage === 1}>&lt;</Button>
                         <span>{currentPage} of {totalPages}</span>
-                        <button onClick={handleNextPage} disabled={currentPage === totalPages}>&gt;</button>
+                        <Button onClick={handleNextPage} disabled={currentPage === totalPages}>&gt;</Button>
                     </div>
                 </div>
             </div>

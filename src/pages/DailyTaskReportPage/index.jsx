@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Sidebar from '../../components/Sidebar';
 import './index.css';
 import { createDaily } from '../../services/daily';
+import { forgotPassword, getDepartments } from '../../services/auth';
 
 const DailyTaskReportPage = () => {
     const [formData, setFormData] = useState({
@@ -12,9 +13,25 @@ const DailyTaskReportPage = () => {
         selectDate: '',
         description: '',
         link: '',
+        department: ''
     });
     const [attachment, setAttachment] = useState(null);
+    const [departments, setDepartments] = useState([]);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchDepartments = async () => {
+            try {
+                const response = await getDepartments();
+                setDepartments(response.data.departments);
+                console.log('Departments fetched: ', response.data.departments);
+            } catch (error) {
+                console.error('Error fetching departments:', error);
+            }
+        };
+
+        fetchDepartments();
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -31,19 +48,11 @@ const DailyTaskReportPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const data = new FormData();
-        data.append('name', formData.reportTitle);
-        data.append('date', formData.selectDate);
-        data.append('description', formData.description);
-        data.append('link', formData.link);
-
-        if (attachment) {
-            data.append('attachment', attachment);
-        }
-
         try {
-            const response = await createDaily(data);
-
+            console.log(formData);
+            
+             await createDaily(formData);
+            
             toast.success('Task added successfully!', {
                 position: 'top-right',
                 autoClose: 3000,
@@ -54,6 +63,7 @@ const DailyTaskReportPage = () => {
                 selectDate: '',
                 description: '',
                 link: '',
+                department: ''
             });
             setAttachment(null);
 
@@ -68,8 +78,9 @@ const DailyTaskReportPage = () => {
             });
             console.error('Error creating daily report:', error);
         }
+        
     };
-
+console.log(formData);
     return (
         <div className="vacation-dashboard-container">
             <Sidebar />
@@ -114,6 +125,21 @@ const DailyTaskReportPage = () => {
                             value={formData.link}
                             onChange={handleChange}
                         />
+
+                        <label htmlFor="department">Assign to Department</label>
+                        <select
+                            id="department"
+                            name="department"
+                            value={formData.department}
+                            onChange={handleChange}
+                        >
+                            <option value="" disabled>Select a department</option>
+                            {departments.map(department => (
+                                <option key={department.id} value={department.id}>
+                                    {department.name}
+                                </option>
+                            ))}
+                        </select>
 
                         <label htmlFor="attachment">Attachment</label>
                         <input

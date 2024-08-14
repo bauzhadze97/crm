@@ -4,7 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Sidebar from '../../components/Sidebar';
 import ReplyModal from '../../components/Modal/ReplyModal';
-import { Button, Card, CardContent, Typography } from '@mui/material';
+import { Button, Card, CardContent, Typography, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import './index.css';
 import { createDailyComment, getDailyComment, updateDailyComment } from '../../services/dailyComment';
 import { getDepartments } from '../../services/auth';
@@ -100,10 +100,10 @@ const MakeCommentPage = () => {
             }));
 
             // Show success notification
-            toast.success('Reply added successfully!');
+            toast.success('კომენტარი დამატებულია!');
             setOpenModal(false);
         } catch (error) {
-            console.error('Error submitting the reply:', error);
+            console.error('შეცდომა. კომენტარი არ დაემატა:', error);
         }
     };
 
@@ -149,9 +149,9 @@ const MakeCommentPage = () => {
                             {daily.attachment && (
                                 <div className="attachment-section">
                                     <label>Attachment: </label>
-                                    {/* <a href={`${process.env.REACT_APP_API_URL}/storage/${daily.attachment}`} target="_blank" rel="noopener noreferrer" download>
+                                    <a href={`${process.env.REACT_APP_API_URL}/storage/${daily.attachment}`} target="_blank" rel="noopener noreferrer" download>
                                         Download Attachment
-                                    </a> */}
+                                    </a>
                                 </div>
                             )}
                             {daily.link && (
@@ -171,22 +171,24 @@ const MakeCommentPage = () => {
                             value={comment}
                             onChange={(e) => setComment(e.target.value)}
                         />
-                        <label htmlFor="department">აირჩიე დეპარტამენტი</label>
-                        <select
-                            id="department"
-                            name="department"
-                            value={selectedDepartment}
-                            onChange={(e) => setSelectedDepartment(e.target.value)}
-                        >
-                            <option value="" disabled>Select a department</option>
-                            {departments && departments.map(department => (
-                                <option key={department.id} value={department.id}>
-                                    {department.name}
-                                </option>
-                            ))}
-                        </select>
+                        <FormControl fullWidth margin="normal">
+                            <InputLabel className='selectdepartment' id="department-label">აირჩიე დეპარტამენტი</InputLabel>
+                            <Select
+                                labelId="department-label"
+                                id="department"
+                                value={selectedDepartment}
+                                onChange={(e) => setSelectedDepartment(e.target.value)}
+                            >
+                                <MenuItem value="" disabled>Select a department</MenuItem>
+                                {departments && departments.map(department => (
+                                    <MenuItem key={department.id} value={department.id}>
+                                        {department.name}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
                         <div className='button-container'>
-                            <Button variant="contained" color="primary" type="submit">+ Add Comment</Button>
+                            <Button variant="contained" color="primary" type="submit">დამატება</Button>
                         </div>
                     </form>
                 </div>
