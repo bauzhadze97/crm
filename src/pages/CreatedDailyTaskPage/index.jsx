@@ -108,7 +108,7 @@ const CreatedDailyTaskPage = () => {
                         <Grid item xs={12} sm={6} md={2}>
                             <TextField
                                 fullWidth
-                                label="Filter by Date"
+                                label="ფილტრი თარიღის მიხედვით"
                                 type="date"
                                 name="date"
                                 value={filters.date}
