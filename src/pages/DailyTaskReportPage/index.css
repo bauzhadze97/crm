@@ -73,8 +73,8 @@
 
 /* Style for the submit button */
 .button-container button {
-    background-color: #007bff;
-    color: white;
+    background-color: #FFE61C;
+    color: #018AD1;
     border: none;
     padding: 10px 20px;
     border-radius: 4px;
@@ -85,4 +85,5 @@
 
 .button-container button:hover {
     background-color: #0056b3;
+    color: #FFF;
 }

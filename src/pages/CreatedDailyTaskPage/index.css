@@ -21,6 +21,7 @@
     margin-bottom: 20px;
     font-size: 24px;
     color: #333;
+
 }
 
 .custom-table {
@@ -74,7 +75,7 @@
 }
 
 .pagination button {
-    background-color: #007BFF;
+    background-color: #007AD3;
     border: none;
     color: white;
     padding: 10px 15px;

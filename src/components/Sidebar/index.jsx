@@ -5,19 +5,21 @@ import SidebarIcon from '../../assets/images/sidebar-icon.svg'
 import LogoutIcon from '../../assets/images/logout.svg'
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-
+import { Badge } from '@mui/material'; // Import Badge component
 import './index.css';
 import { logoutUser } from '../../services/auth';
 import { clearUser } from '../../store/slices/userSlice';
 import { toast } from 'react-toastify';
 import KaImg from '../../assets/images/ka.png'
 import EnImg from '../../assets/images/en.png'
+import { getDailyList } from '../../services/daily'; // Import the service to fetch the daily list
 
 export default function Sidebar() {
     const location = useLocation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [isVisible, setIsVisible] = useState(true);
+    const [newTaskCount, setNewTaskCount] = useState(0); // State for new tasks count
     const userInfo = useSelector((state) => state.user.data)
 
     const { t, i18n } = useTranslation();
@@ -32,6 +34,26 @@ export default function Sidebar() {
       }
     }, [window.innerWidth])
 
+    // Fetch new tasks count
+    useEffect(() => {
+      const fetchNewTaskCount = async () => {
+        try {
+          const response = await getDailyList(1, 100); // Adjust the pagination parameters as needed
+          const newTasks = response.data.data.filter(daily => {
+            const createdAt = new Date(daily.created_at);
+            const now = new Date();
+            const diffInHours = Math.abs(now - createdAt) / 36e5; // difference in hours
+            return diffInHours <= 24; // "new" if created in the last 24 hours
+          });
+          setNewTaskCount(newTasks.length);
+        } catch (error) {
+          console.error('Error fetching new task count:', error);
+        }
+      };
+
+      fetchNewTaskCount();
+    }, []);
+
     const handleLogout = async () => {
       try {
         const res = await logoutUser()
@@ -40,7 +62,7 @@ export default function Sidebar() {
         localStorage.removeItem('token')
         navigate('/')
       } catch(err) {
-        console.err(err);
+        console.error(err);
       }
     }
 
@@ -69,7 +91,9 @@ export default function Sidebar() {
             <Link to={'#'}><span className={`${location.pathname !== '/procurement' ? 'animate-link' : ''}`}>Lead Gorgia</span></Link>
             <Link to={'/daily-tasks'} className={`${location.pathname === '/daily-tasks' ? 'active' : ''}`}>
               {location.pathname === '/daily-tasks' && <img src={SidebarIcon} alt="Daily Task Results" />}
-              <span className={`${location.pathname !== '/daily-tasks' ? 'animate-link' : ''}`}>{t("საკითხების დაფა")}</span>
+              <Badge badgeContent={newTaskCount} color="error" >
+                <span className={`${location.pathname !== '/daily-tasks' ? 'animate-link' : ''}`} sx={{ margin: '0 0 0 0'}}>{t("საკითხების დაფა")}</span>
+              </Badge>
             </Link>
             {/* <Link>Notes</Link> */}
             <Link to="https://gorgup.com/" target='_blank'><span className='animate-link'>Gorgup</span></Link>

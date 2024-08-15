@@ -177,7 +177,7 @@ const CreatedDailyTaskPage = () => {
                                 <TableCell sx={{ color: 'white', fontFamily: '"BPG Rioni", sans-serif' }}>თარიღი</TableCell>
                                 <TableCell sx={{ color: 'white', fontFamily: '"BPG Rioni", sans-serif' }}>საკითხი</TableCell>
                                 <TableCell sx={{ color: 'white', fontFamily: '"BPG Rioni", sans-serif' }}>დეპარტამენტი</TableCell>
-                                <TableCell sx={{ color: 'white', fontFamily: '"BPG Rioni", sans-serif'}}>სახელი გვარი</TableCell>
+                                <TableCell sx={{ color: 'white', fontFamily: '"BPG Rioni", sans-serif'}}>სახელი / გვარი</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -188,7 +188,7 @@ const CreatedDailyTaskPage = () => {
                                         <TableCell sx={{fontFamily: '"BPG Rioni", sans-serif'}}>{new Date(daily.date).toLocaleDateString()}</TableCell>
                                         <TableCell sx={{fontFamily: '"BPG Rioni", sans-serif'}}><Link to={`/make-comment/${daily.id}`}>{daily.name}</Link></TableCell>
                                         <TableCell sx={{fontFamily: '"BPG Rioni", sans-serif'}}>{daily.user?.department?.name || 'No Department'}</TableCell>
-                                        <TableCell sx={{fontFamily: '"BPG Rioni", sans-serif'}}>{daily.user?.name || 'No User' }/ {daily.user?.sur_name}</TableCell>
+                                        <TableCell sx={{fontFamily: '"BPG Rioni", sans-serif'}}>{daily.user?.name || 'No User' } / {daily.user?.sur_name}</TableCell>
                                     </TableRow>
                                 ))
                             ) : (
