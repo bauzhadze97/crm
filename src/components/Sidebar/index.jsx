@@ -89,6 +89,7 @@ export default function Sidebar() {
             <Link to={'#'}><span className={`${location.pathname !== '/procurement' ? 'animate-link' : ''}`}>{t("my_discount")}</span></Link>
             <Link to={'/hr-docs'}><span className={`${location.pathname !== '/procurement' ? 'animate-link' : ''}`}>{t("hr_document")}</span></Link>
             <Link to={'#'}><span className={`${location.pathname !== '/procurement' ? 'animate-link' : ''}`}>Lead Gorgia</span></Link>
+            <Link to={'/notes'}><span className={`${location.pathname !== '/notes' ? 'animate-link' : ''}`}>Notes</span></Link>
             <Link to={'/daily-tasks'} className={`${location.pathname === '/daily-tasks' ? 'active' : ''}`}>
               {location.pathname === '/daily-tasks' && <img src={SidebarIcon} alt="Daily Task Results" />}
               <Badge badgeContent={newTaskCount} color="error" >

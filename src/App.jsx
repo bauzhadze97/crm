@@ -23,6 +23,8 @@ import MakeDocsPage from './pages/MakeDocsPage';
 import HrPage from './pages/HrPage';
 import DocumentStatusPage from './pages/DocumentStatusPage';
 import HrApprovalPage from './pages/HrApprovalPage';
+import NotesPage from './pages/NotesPage';
+import NotesEditor from './pages/NotesEditor';
 
 function App() {
 
@@ -151,6 +153,22 @@ function App() {
             element={
               <ProtectedRoute>
                 <HrApprovalPage/>
+              </ProtectedRoute>
+            } 
+          />
+            <Route 
+            path="/notes" 
+            element={
+              <ProtectedRoute>
+                <NotesPage/>
+              </ProtectedRoute>
+            } 
+          />
+            <Route 
+            path="/notes-editor" 
+            element={
+              <ProtectedRoute>
+                <NotesEditor/>
               </ProtectedRoute>
             } 
           />
