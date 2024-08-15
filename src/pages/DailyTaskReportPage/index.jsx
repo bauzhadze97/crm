@@ -100,7 +100,7 @@ console.log(formData);
                             onChange={handleChange}
                         />
 
-                        <label htmlFor="selectDate">Select Date</label>
+                        <label htmlFor="selectDate">აირჩიეთ თარიღი</label>
                         <input
                             type="date"
                             id="selectDate"
@@ -117,18 +117,8 @@ console.log(formData);
                             value={formData.description}
                             onChange={handleChange}
                         />
-
-                        <label htmlFor="link">Link</label>
-                        <input
-                            type="url"
-                            id="link"
-                            name="link"
-                            placeholder="Enter the link here..."
-                            value={formData.link}
-                            onChange={handleChange}
-                        />
-
-                        <label htmlFor="department">Assign to Department</label>
+                      
+                      <label htmlFor="department">Assign to Department</label>
                         <select
                             id="department"
                             name="department"
@@ -142,6 +132,18 @@ console.log(formData);
                                 </option>
                             ))}
                         </select>
+
+                        <label htmlFor="link">Link</label>
+                        <input
+                            type="url"
+                            id="link"
+                            name="link"
+                            placeholder="Enter the link here..."
+                            value={formData.link}
+                            onChange={handleChange}
+                        />
+
+
 
                         <label htmlFor="attachment">Attachment</label>
                         <input

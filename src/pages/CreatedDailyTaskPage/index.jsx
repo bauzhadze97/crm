@@ -74,7 +74,7 @@ const CreatedDailyTaskPage = () => {
 
     const getRowStyle = (daily) => {
         if (daily.comments.length === 0) {
-            return { backgroundColor: '#800020', color: 'white' };
+            return {  color: 'white' };
         }
         const hasAdminComment = daily.comments.some(comment => comment.user.id === 1);
         if (hasAdminComment) {
@@ -101,10 +101,10 @@ const CreatedDailyTaskPage = () => {
                     <h2 className="page-name">
                         <div>დღის საკითხების დაფა</div>
                         <div className='button-container'>
-                            <Link to='/create-daily'><Button variant="contained" color="primary">საკითხის გამოტანა</Button></Link>
+                            <Link to='/create-daily'><Button variant="contained" color="primary" sx={{fontFamily: '"BPG Rioni", sans-serif'}}>საკითხის გამოტანა</Button></Link>
                         </div>
                     </h2>
-                    <Grid container spacing={2} alignItems="center">
+                    <Grid container spacing={2} alignItems="center" sx={{ marginBottom: '15px' }}>
                         <Grid item xs={12} sm={6} md={2}>
                             <TextField
                                 fullWidth
@@ -118,7 +118,7 @@ const CreatedDailyTaskPage = () => {
                                 }}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={6} md={3}>
+                        <Grid item xs={12} sm={6} md={3} sx={{fontFamily: '"BPG Rioni", sans-serif'}}>
                             <TextField
                                 fullWidth
                                 label="ფილტრი სახელწოდებით"
@@ -129,13 +129,13 @@ const CreatedDailyTaskPage = () => {
                         </Grid>
                         <Grid item xs={12} sm={6} md={3}>
                             <FormControl fullWidth>
-                                <InputLabel>ფილტრი დეპარტამენტების მიხედვით</InputLabel>
+                                <InputLabel sx={{fontFamily: '"BPG Rioni", sans-serif'}}>ფილტრი დეპარტამენტების მიხედვით</InputLabel>
                                 <Select
                                     name="department"
                                     value={filters.department}
                                     onChange={handleFilterChange}
                                 >
-                                    <MenuItem value="">ყველა დეპარტამენტი</MenuItem>
+                                    <MenuItem value="" sx={{fontFamily: '"BPG Rioni", sans-serif'}}>ყველა დეპარტამენტი</MenuItem>
                                     {departments.map(department => (
                                         <MenuItem key={department.id} value={department.id}>
                                             {department.name}
@@ -166,29 +166,29 @@ const CreatedDailyTaskPage = () => {
                                         color="primary"
                                     />
                                 }
-                                label="ხელმძღვანელის კომენტარი"
+                                label="დამფუძნებლის კომენტარი"
                             />
                         </Grid>
                     </Grid>
                     <Table className="custom-table">
                         <TableHead>
                             <TableRow>
-                                <TableCell>საკითხის ნომერი</TableCell>
-                                <TableCell>თარიღი</TableCell>
-                                <TableCell>საკითხი</TableCell>
-                                <TableCell>დეპარტამენტი</TableCell>
-                                <TableCell>სახელი გვარი</TableCell>
+                                <TableCell sx={{ color: 'white', fontFamily: '"BPG Rioni", sans-serif' }}>საკითხის ნომერი</TableCell>
+                                <TableCell sx={{ color: 'white', fontFamily: '"BPG Rioni", sans-serif' }}>თარიღი</TableCell>
+                                <TableCell sx={{ color: 'white', fontFamily: '"BPG Rioni", sans-serif' }}>საკითხი</TableCell>
+                                <TableCell sx={{ color: 'white', fontFamily: '"BPG Rioni", sans-serif' }}>დეპარტამენტი</TableCell>
+                                <TableCell sx={{ color: 'white', fontFamily: '"BPG Rioni", sans-serif'}}>სახელი გვარი</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {filteredDailies.length > 0 ? (
                                 filteredDailies.map((daily) => (
                                     <TableRow key={daily.id} style={getRowStyle(daily)}>
-                                        <TableCell>{daily.id}</TableCell>
-                                        <TableCell>{new Date(daily.date).toLocaleDateString()}</TableCell>
-                                        <TableCell><Link to={`/make-comment/${daily.id}`}>{daily.name}</Link></TableCell>
-                                        <TableCell>{daily.user?.department?.name || 'No Department'}</TableCell>
-                                        <TableCell>{daily.user?.name || 'No User' }/ {daily.user?.sur_name}</TableCell>
+                                        <TableCell sx={{fontFamily: '"BPG Rioni", sans-serif'}}>{daily.id}</TableCell>
+                                        <TableCell sx={{fontFamily: '"BPG Rioni", sans-serif'}}>{new Date(daily.date).toLocaleDateString()}</TableCell>
+                                        <TableCell sx={{fontFamily: '"BPG Rioni", sans-serif'}}><Link to={`/make-comment/${daily.id}`}>{daily.name}</Link></TableCell>
+                                        <TableCell sx={{fontFamily: '"BPG Rioni", sans-serif'}}>{daily.user?.department?.name || 'No Department'}</TableCell>
+                                        <TableCell sx={{fontFamily: '"BPG Rioni", sans-serif'}}>{daily.user?.name || 'No User' }/ {daily.user?.sur_name}</TableCell>
                                     </TableRow>
                                 ))
                             ) : (

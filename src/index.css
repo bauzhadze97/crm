@@ -1,7 +1,9 @@
+@import url("//cdn.web-fonts.ge/fonts/bpg-rioni/css/bpg-rioni.min.css");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url("//cdn.web-fonts.ge/fonts/bpg-rioni/css/bpg-rioni.min.css");
+
 :root {
   font-family: "BPG Rioni", sans-serif;
   font-synthesis: none;
