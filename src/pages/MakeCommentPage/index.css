@@ -17,6 +17,7 @@
     padding: 40px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    font-family: "BPG Rioni", sans-serif;
 }
 .form-container1 {
     display: flex;
@@ -27,6 +28,7 @@
     padding: 40px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    font-family: "BPG Rioni", sans-serif;
 }
 .task-report-form {
     max-width: 70%;
@@ -106,6 +108,7 @@ input[type="file"]::file-selector-button {
   .comments-section {
     width: 100%;
     margin-top: 20px;
+    font-family: "BPG Rioni", sans-serif;
 }
 
 .comments-list {

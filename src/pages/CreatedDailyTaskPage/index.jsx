@@ -156,8 +156,8 @@ const CreatedDailyTaskPage = () => {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Grid item xs={12} sm={6} md={2}>
-                            <FormControlLabel
+                        <Grid item xs={12} sm={6} md={2} sx={{fontFamily: '"BPG Rioni", sans-serif'}}>
+                            <FormControlLabel 
                                 control={
                                     <Checkbox
                                         checked={filters.adminNotCommented}
