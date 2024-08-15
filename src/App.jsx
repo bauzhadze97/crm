@@ -22,6 +22,7 @@ import MakeCommentPage from './pages/MakeCommentPage';
 import MakeDocsPage from './pages/MakeDocsPage';
 import HrPage from './pages/HrPage';
 import DocumentStatusPage from './pages/DocumentStatusPage';
+import HrApprovalPage from './pages/HrApprovalPage';
 
 function App() {
 
@@ -142,6 +143,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <DocumentStatusPage/>
+              </ProtectedRoute>
+            } 
+          />
+           <Route 
+            path="/hr-head" 
+            element={
+              <ProtectedRoute>
+                <HrApprovalPage/>
               </ProtectedRoute>
             } 
           />
