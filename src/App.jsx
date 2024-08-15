@@ -20,6 +20,8 @@ import DailyTaskReportPage from './pages/DailyTaskReportPage';
 import CreatedDailyTaskPage from './pages/CreatedDailyTaskPage';
 import MakeCommentPage from './pages/MakeCommentPage';
 import MakeDocsPage from './pages/MakeDocsPage';
+import HrPage from './pages/HrPage';
+import DocumentStatusPage from './pages/DocumentStatusPage';
 
 function App() {
 
@@ -124,6 +126,22 @@ function App() {
             element={
               <ProtectedRoute>
                 <MakeDocsPage/>
+              </ProtectedRoute>
+            } 
+          />
+               <Route 
+            path="/hr" 
+            element={
+              <ProtectedRoute>
+                <HrPage/>
+              </ProtectedRoute>
+            } 
+          />
+               <Route 
+            path="/hr-status" 
+            element={
+              <ProtectedRoute>
+                <DocumentStatusPage/>
               </ProtectedRoute>
             } 
           />
