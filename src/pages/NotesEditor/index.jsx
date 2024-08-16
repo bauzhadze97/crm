@@ -25,11 +25,9 @@ const NotesEditor = () => {
       const fetchNote = async () => {
         try {
           const response = await getNote(id);
-          console.log(response.data); // Inspect the structure of the response
-          
           // Update based on your data structure
-          setTitle(response.data.title);
-          setContent(response.data.note);
+          setTitle(response.data.discount.title);
+          setContent(response.data.discount.note);
         } catch (error) {
           setError('Failed to load note data.');
         }
