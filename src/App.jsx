@@ -165,7 +165,7 @@ function App() {
             } 
           />
             <Route 
-            path="/notes-editor" 
+            path="/notes-editor/:id?"
             element={
               <ProtectedRoute>
                 <NotesEditor/>

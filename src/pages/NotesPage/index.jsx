@@ -1,19 +1,41 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
 import Sidebar from '../../components/Sidebar';
 import Profile from '../../components/Profile/index';
 import Navigation from '../../components/Navigation';
 import NoteImage from '../../assets/images/illustration.png'; // Ensure this path is correct
 import { Box, Typography, Button, Card, CardContent, TextField } from '@mui/material';
+import { getNoteList } from '../../services/note';
+import NoteIcon from '../../assets/images/note-icon.png';
+import SearchIcon from '../../assets/images/search-icon.png';
+import SaveIcon from '../../assets/images/save.png'
+
+
 
 const NotesPage = () => {
   const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState('');
 
-  const navigate = useNavigate(); // Initialize the navigate hook
+  useEffect(() => {
+    
+    try {
+      const fetchData = async () => {
+        const response = await getNoteList();
+        setNotes(response.data.notes)
+      }
+      
+      fetchData();
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }, [])
+
+
+  const navigate = useNavigate();
 
   const handleGetStarted = () => {
-    navigate('/notes-editor'); // Navigate to the Notes Editor page
+    navigate('/notes-editor');
   };
 
   const handleAddNote = () => {
@@ -23,6 +45,9 @@ const NotesPage = () => {
     }
   };
 
+  console.log(notes);
+  
+
   return (
     <div className="vacation-dashboard-container">
       <Sidebar />
@@ -30,18 +55,13 @@ const NotesPage = () => {
         <div className="grow-0">
           <Profile />
         </div>
-        <main className="vacation-main-content grow">
+        <main className="vacation-main-content grow ">
           <Navigation link="/notes" />
           <div className="flex flex-col items-center">
-            <div className="vacation-main-header border-[3px] border-[#105D8D] w-[100%] mb-4">
-              <h1 style={{ color: '#007dba' }} className="font-semibold text-xl">
-                My Notes
-              </h1>
-            </div>
-            <Box sx={{ width: '80%', paddingBottom: '20px', textAlign: 'center' }}>
-              {/* If there are no notes, show the empty state */}
+            
+            <Box sx={{ width: '60%', paddingBottom: '20px', textAlign: 'center' }}>
               {notes.length === 0 ? (
-                <Box sx={{ marginTop: '50px' }}>
+                <Box sx={{ marginTop: '50px', }}>
                   <Card
                     sx={{
                       padding: '20px',
@@ -65,7 +85,7 @@ const NotesPage = () => {
                       Hmm... Looks like you don’t have any notes.
                     </Typography>
                     <Button
-                      onClick={handleGetStarted} // Corrected click handler
+                      onClick={handleGetStarted}
                       variant="contained"
                       sx={{
                         backgroundColor: '#007dba',
@@ -81,40 +101,74 @@ const NotesPage = () => {
                   </Card>
                 </Box>
               ) : (
-                <Box>
-                  <Box sx={{ marginBottom: '20px' }}>
-                    <TextField
-                      value={newNote}
-                      onChange={(e) => setNewNote(e.target.value)}
-                      label="Add a new note"
-                      variant="outlined"
-                      fullWidth
-                      sx={{ marginBottom: '20px' }}
-                    />
-                    <Button
-                      variant="contained"
-                      onClick={handleAddNote}
-                      sx={{
-                        backgroundColor: '#007dba',
-                        color: '#ffffff',
-                        borderRadius: '25px',
-                        padding: '10px 30px',
-                        fontWeight: 'bold',
-                        fontSize: '16px',
-                      }}
-                    >
-                      Add Note
-                    </Button>
-                  </Box>
-                  {/* Display the list of notes */}
+                <Box sx={{backgroundColor:"white", width:"100%", padding:"50px", mt:"50px" }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <img src={NoteIcon} />
+                    <p style={{ marginBottom: '1.5rem', fontSize: '32px', color: '#105D8D' }}>My Notes</p>
+                    <p style={{ color: '#939191' }}>{notes && notes.length}</p>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '1.5rem', paddingTop: '2.5rem', paddingBottom: '2.5rem' }}>
+                    <Link to='/notes-editor'>
+                      <img src={SaveIcon} alt="" />
+                    </Link>
+                    <img src={SearchIcon} alt="" />
+                  </div>
                   {notes.map((note, index) => (
-                    <Card key={index} sx={{ marginBottom: '15px', padding: '20px', borderRadius: '15px' }}>
-                      <CardContent>
-                        <Typography variant="body1" sx={{ fontFamily: '"BPG Rioni", sans-serif' }}>
-                          {note}
-                        </Typography>
-                      </CardContent>
-                    </Card>
+                    <Link 
+                      to={`/notes-editor/${note.id}`} // Navigate to the editor with the note ID
+                      key={index} 
+                      style={{ textDecoration: 'none' }} // Remove underline for the link
+                    >
+                      <Card
+                        sx={{
+                          marginBottom: '20px',
+                          padding: '20px',
+                          borderRadius: '15px',
+                          boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.1)',
+                          backgroundColor: '#ffffff',
+                          transition: 'transform 0.3s',
+                          '&:hover': {
+                            transform: 'scale(1.03)',
+                          },
+                        }}
+                      >
+                        <CardContent>
+                          <Typography
+                            variant="body2"
+                            sx={{
+                              color: '#888888',
+                              marginBottom: '8px',
+                            }}
+                          >
+                            {new Date(note.created_at).toLocaleDateString('en-US', {
+                              month: 'short',
+                              day: 'numeric',
+                            })}
+                          </Typography>
+
+                          <Typography
+                            variant="h6"
+                            sx={{
+                              fontWeight: 'bold',
+                              fontFamily: '"BPG Rioni", sans-serif',
+                              color: '#007dba',
+                              marginBottom: '12px',
+                            }}
+                          >
+                            {note.title}
+                          </Typography>
+                          <Typography
+                            variant="body1"
+                            sx={{
+                              fontFamily: '"BPG Rioni", sans-serif',
+                              color: '#333333',
+                              lineHeight: '1.6',
+                            }}
+                            dangerouslySetInnerHTML={{ __html: note.note }} // Renders the note content as HTML
+                          />
+                        </CardContent>
+                      </Card>
+                    </Link>
                   ))}
                 </Box>
               )}

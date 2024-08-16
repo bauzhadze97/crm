@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar';
 import Profile from '../../components/Profile/index';
 import Navigation from '../../components/Navigation';
@@ -7,15 +8,55 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SaveIcon from '@mui/icons-material/Save';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { createNote, updateNote, getNote } from '../../services/note';
 
 const NotesEditor = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [isEdit, setIsEdit] = useState(false);
 
-  const handleSave = () => {
-    // Logic to save the note (e.g., sending the data to a backend)
-    console.log({ title, content });
+  useEffect(() => {
+    if (id) {
+      setIsEdit(true);
+      const fetchNote = async () => {
+        try {
+          const response = await getNote(id);
+          console.log(response);
+          
+          setTitle(response.data.discount.title);
+          setContent(response.data.discount.note);
+        } catch (error) {
+          setError('Failed to load note data.');
+        }
+      };
+      fetchNote();
+    }
+  }, [id]);
+
+  const handleSave = async () => {
+    try {
+      setLoading(true);
+      setError('');
+      const data = { title, content };
+      if (isEdit) {
+        await updateNote(id, data);
+      } else {
+        await createNote(data);
+      }
+      navigate('/notes');
+    } catch (error) {
+      setError('Failed to save note. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
+
+  console.log(title);
+  
 
   return (
     <div className="vacation-dashboard-container">
@@ -29,7 +70,7 @@ const NotesEditor = () => {
           <div className="flex flex-col items-center">
             <div className="vacation-main-header border-[3px] border-[#105D8D] w-[100%] mb-4">
               <h1 style={{ color: '#007dba' }} className="font-semibold text-xl">
-                My Notes
+                {isEdit ? 'Edit Note' : 'Create Note'}
               </h1>
             </div>
             <Box
@@ -42,20 +83,18 @@ const NotesEditor = () => {
                 maxWidth: '500px',
               }}
             >
-              {/* Header with Back and Save buttons */}
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                <IconButton>
+                <IconButton onClick={() => navigate('/notes')}>
                   <ArrowBackIcon sx={{ color: '#007dba' }} />
                 </IconButton>
-                <IconButton onClick={handleSave}>
+                <IconButton onClick={handleSave} disabled={loading}>
                   <SaveIcon sx={{ color: '#007dba' }} />
                 </IconButton>
               </Box>
 
-              {/* Title Input */}
               <TextField
                 variant="standard"
-                placeholder="Tittle.."
+                placeholder="Title.."
                 fullWidth
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -66,7 +105,6 @@ const NotesEditor = () => {
                 sx={{ mb: 2 }}
               />
 
-              {/* Content Input */}
               <ReactQuill
                 value={content}
                 onChange={setContent}
@@ -75,7 +113,7 @@ const NotesEditor = () => {
                 style={{ height: '300px', marginBottom: '50px' }}
               />
 
-  
+              {error && <div style={{ color: 'red', marginTop: '10px' }}>{error}</div>}
             </Box>
           </div>
         </main>
