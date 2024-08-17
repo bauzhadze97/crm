@@ -1,36 +1,34 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
+import { Link, useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar';
 import Profile from '../../components/Profile/index';
 import Navigation from '../../components/Navigation';
-import NoteImage from '../../assets/images/illustration.png'; // Ensure this path is correct
-import { Box, Typography, Button, Card, CardContent, TextField } from '@mui/material';
+import NoteImage from '../../assets/images/illustration.png';
+import { Box, Typography, Button, Card, CardContent } from '@mui/material';
 import { getNoteList } from '../../services/note';
 import NoteIcon from '../../assets/images/note-icon.png';
 import SearchIcon from '../../assets/images/search-icon.png';
-import SaveIcon from '../../assets/images/save.png'
-
-
+import SaveIcon from '../../assets/images/save.png';
 
 const NotesPage = () => {
   const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState('');
 
   useEffect(() => {
-    
     try {
       const fetchData = async () => {
         const response = await getNoteList();
-        setNotes(response.data.notes)
-      }
-      
+        
+        // Sort notes by creation date in descending order (most recent first)
+        const sortedNotes = response.data.notes.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        setNotes(sortedNotes);
+      };
+
       fetchData();
-      
     } catch (error) {
       console.log(error);
     }
-  }, [])
-
+  }, []);
 
   const navigate = useNavigate();
 
@@ -40,13 +38,13 @@ const NotesPage = () => {
 
   const handleAddNote = () => {
     if (newNote.trim()) {
-      setNotes([...notes, newNote.trim()]);
+      // Add the new note to the beginning of the notes array
+      setNotes([newNote.trim(), ...notes]);
       setNewNote('');
     }
   };
 
   console.log(notes);
-  
 
   return (
     <div className="vacation-dashboard-container">
@@ -58,7 +56,6 @@ const NotesPage = () => {
         <main className="vacation-main-content grow ">
           <Navigation link="/notes" />
           <div className="flex flex-col items-center">
-            
             <Box sx={{ width: '60%', paddingBottom: '20px', textAlign: 'center' }}>
               {notes.length === 0 ? (
                 <Box sx={{ marginTop: '50px', }}>
@@ -74,7 +71,7 @@ const NotesPage = () => {
                     }}
                   >
                     <img
-                      src={NoteImage} // Correct usage of the image
+                      src={NoteImage}
                       alt="Empty Notes"
                       style={{ marginBottom: '20px', width: '200px' }}
                     />
@@ -101,23 +98,23 @@ const NotesPage = () => {
                   </Card>
                 </Box>
               ) : (
-                <Box sx={{backgroundColor:"white", width:"100%", padding:"50px", mt:"50px" }}>
+                <Box sx={{ backgroundColor: "white", width: "100%", padding: "50px", mt: "50px" }}>
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <img src={NoteIcon} />
+                    <img src={NoteIcon} alt="Note Icon" />
                     <p style={{ marginBottom: '1.5rem', fontSize: '32px', color: '#105D8D' }}>My Notes</p>
                     <p style={{ color: '#939191' }}>{notes && notes.length}</p>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '1.5rem', paddingTop: '2.5rem', paddingBottom: '2.5rem' }}>
                     <Link to='/notes-editor'>
-                      <img src={SaveIcon} alt="" />
+                      <img src={SaveIcon} alt="Save Icon" />
                     </Link>
-                    <img src={SearchIcon} alt="" />
+                    <img src={SearchIcon} alt="Search Icon" />
                   </div>
                   {notes.map((note, index) => (
                     <Link 
-                      to={`/notes-editor/${note.id}`} // Navigate to the editor with the note ID
+                      to={`/notes-editor/${note.id}`} 
                       key={index} 
-                      style={{ textDecoration: 'none' }} // Remove underline for the link
+                      style={{ textDecoration: 'none' }}
                     >
                       <Card
                         sx={{
@@ -164,7 +161,7 @@ const NotesPage = () => {
                               color: '#333333',
                               lineHeight: '1.6',
                             }}
-                            dangerouslySetInnerHTML={{ __html: note.note }} // Renders the note content as HTML
+                            dangerouslySetInnerHTML={{ __html: note.note }} 
                           />
                         </CardContent>
                       </Card>
