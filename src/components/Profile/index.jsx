@@ -10,7 +10,7 @@ export default function Profile() {
     const userData = useSelector((state) => state.user.data)
 
     return <div className='profile-component'>
-        <div className='bg-white mt-16 rounded-3xl p-4 relative border-[3px] border-[#105D8D] max-h-[80vh] hide-scrollbar overflow-y-auto'>
+        <div className='bg-white mt-16 rounded-3xl p-4 relative border-[3px] border-[#105D8D] max-h-[95vh] hide-scrollbar overflow-y-auto'>
             <Link to="/profile"><img src={Edit} alt="edit" className='absolute right-4'/></Link>
             <h1 className='text-xl font-bold' >{t("main_info")}</h1>
             <form className='profile-form'>

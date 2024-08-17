@@ -76,7 +76,6 @@ const NotesEditor = () => {
                 backgroundColor: '#ffffff',
                 borderRadius: '15px',
                 boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
-                maxWidth: '500px',
               }}
             >
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
