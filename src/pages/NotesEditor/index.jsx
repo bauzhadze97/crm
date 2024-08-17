@@ -9,6 +9,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { createNote, updateNote, getNote } from '../../services/note';
+import deleteNoteIcon from '../../assets/images/delete-note.png';
 
 const NotesEditor = () => {
   const { id } = useParams();

@@ -6,13 +6,15 @@ import Sidebar from '../../components/Sidebar';
 import './index.css';
 import { createDaily } from '../../services/daily';
 import { forgotPassword, getDepartments } from '../../services/auth';
+import { Button } from '@mui/material';
+
 
 
 
 const DailyTaskReportPage = () => {
     const [formData, setFormData] = useState({
         reportTitle: '',
-        selectDate: '',
+        selectDate: new Date().toISOString().split('T')[0], 
         description: '',
         link: '',
         department: ''
@@ -88,14 +90,14 @@ console.log(formData);
             <Sidebar />
             <div className='main-form-container'>
                 <div className="form-container">
-                    <h2 className='page-name'>Daily Task Report</h2>
+                  
                     <form className="task-report-form" onSubmit={handleSubmit}>
-                        <label htmlFor="reportTitle">Daily Task Report</label>
+                        <label htmlFor="reportTitle">საკითხის სახელწოდება</label>
                         <input
                             type="text"
                             id="reportTitle"
                             name="reportTitle"
-                            placeholder="Daily Task Report - IT Department"
+                            placeholder="საკითხის სახელწოდება"
                             value={formData.reportTitle}
                             onChange={handleChange}
                         />
@@ -106,26 +108,26 @@ console.log(formData);
                             id="selectDate"
                             name="selectDate"
                             value={formData.selectDate}
-                            onChange={handleChange}
+                            readOnly
                         />
 
-                        <label htmlFor="description">Description</label>
+                        <label htmlFor="description">აღწერა</label>
                         <textarea
                             id="description"
                             name="description"
-                            placeholder="Enter your description here..."
+                            placeholder="დაწერეთ თქვენი აღწერა..."
                             value={formData.description}
                             onChange={handleChange}
                         />
                       
-                      <label htmlFor="department">Assign to Department</label>
+                      <label htmlFor="department">დეპარტამენტის მიბმა</label>
                         <select
                             id="department"
                             name="department"
                             value={formData.department}
                             onChange={handleChange}
                         >
-                            <option value="" disabled>Select a department</option>
+                            <option value="" disabled>აირჩიეთ დეპარტამენტი</option>
                             {departments.map(department => (
                                 <option key={department.id} value={department.id}>
                                     {department.name}
@@ -133,19 +135,19 @@ console.log(formData);
                             ))}
                         </select>
 
-                        <label htmlFor="link">Link</label>
+                        <label htmlFor="link">ბმული</label>
                         <input
                             type="url"
                             id="link"
                             name="link"
-                            placeholder="Enter the link here..."
+                            placeholder="ჩაწერეთ ბმული..."
                             value={formData.link}
                             onChange={handleChange}
                         />
 
 
 
-                        <label htmlFor="attachment">Attachment</label>
+                        <label htmlFor="attachment">ფაილი</label>
                         <input
                             type="file"
                             id="attachment"
@@ -155,8 +157,20 @@ console.log(formData);
                         />
 
                         <div className='button-container'>
-                            <button type="submit">+ Add Task</button>
-                        </div>
+                            
+                        <Button
+  variant="contained"
+  color="primary"
+  sx={{
+    fontFamily: '"BPG Rioni", sans-serif',
+    marginTop: '15px',
+    marginBottom: '15px',
+  }}
+  type="submit"
+>
+  რეპორტის დამატება
+</Button>
+    </div>
                     </form>
                 </div>
             </div>
