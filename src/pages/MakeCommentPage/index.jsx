@@ -151,9 +151,9 @@ const MakeCommentPage = () => {
                             {daily.attachment && (
                                 <div className="attachment-section">
                                     <label>Attachment: </label>
-                                    {/* <a href={`${process.env.REACT_APP_API_URL}/storage/${daily.attachment}`} target="_blank" rel="noopener noreferrer" download>
+                                    <a href={`${import.meta.env.VITE_API_BASE_URL}/storage/${daily.attachment}`} target="_blank" rel="noopener noreferrer" download>
                                         Download Attachment
-                                    </a> */}
+                                    </a>
                                 </div>
                             )}
                             {daily.link && (

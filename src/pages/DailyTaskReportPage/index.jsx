@@ -55,7 +55,7 @@ const DailyTaskReportPage = () => {
         try {
             console.log(formData);
             
-             await createDaily(formData);
+             await createDaily({...formData, attachment: attachment});
             
             toast.success('Task added successfully!', {
                 position: 'top-right',
